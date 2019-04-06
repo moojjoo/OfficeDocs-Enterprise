@@ -1,37 +1,35 @@
 ---
-title: "Cloud adoption Test Lab Guides (TLGs)"
+title: "Test Office 365 with Cloud adoption Test Lab Guides (TLGs)"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 12/15/2017
+ms.date: 03/13/2019
 ms.audience: ITPro
 ms.topic: hub-page
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
 ms.custom:
 - Ent_TLGs
 ms.assetid: 706d5449-45e5-4b0c-a012-ab60501899ad
-description: "Summary: Use these cloud adoption Test Lab Guides (TLGs) to set up demonstration, proof of concept, or dev/test environments for Office 365, Enterprise Mobility + Security (EMS), Dynamics 365, and Office Server products."
+description: "Summary: Use these cloud adoption Test Lab Guides (TLGs) to set up demonstration, proof of concept, or dev/test environments for Office 365, Dynamics 365, and Office Server products."
 ---
 
-# Cloud adoption Test Lab Guides (TLGs)
+# Test Office 365 with cloud adoption Test Lab Guides (TLGs)
 
- **Summary:** Use these cloud adoption Test Lab Guides (TLGs) to set up demonstration, proof of concept, or dev/test environments for Office 365, Enterprise Mobility + Security (EMS), Dynamics 365, and Office Server products.
+ **Summary:** Use these cloud adoption Test Lab Guides (TLGs) to set up demonstration, proof of concept, or dev/test environments for Office 365, Dynamics 365, and Office Server products.
   
 TLGs help you quickly learn about Microsoft products. They're great for situations where you need to evaluate a technology or configuration before you decide whether it's right for you or before you roll it out to users. The "I built it out myself and it works" hands-on experience helps you understand the deployment requirements of a new product or solution so you can better plan for hosting it in production.
   
 TLGs also create representative environments for development and testing of applications, also known as dev/test environments.
   
-![Test Lab Guides in the Microsoft Cloud](images/24ad0d1b-3274-40fb-972a-b8188b7268d1.png)
+![Test Lab Guides in the Microsoft Cloud](media/24ad0d1b-3274-40fb-972a-b8188b7268d1.png)
   
-See these additional resources before diving in:
-  
-- View the [Experience the Microsoft Cloud with Cloud Adoption Test Lab Guides](https://mva.microsoft.com/en-US/training-courses/experience-the-microsoft-cloud-with-cloud-adoption-test-lab-guides-17960?l=LXNRdhSLE_1000115881 ) Microsoft Virtual Academy session (only 22 minutes).
-    
-- Click [here](http://aka.ms/catlgstack) for a visual map to all the articles in the One Microsoft Cloud Test Lab Guide stack.
+Click [here](http://aka.ms/catlgstack) for a visual map to all the articles in the One Microsoft Cloud Test Lab Guide stack.
     
 ## Office 365 dev/test environment
 
@@ -61,7 +59,7 @@ For your Office 365 dev/test environment, use these articles to demonstrate ente
     
 - [Cloud App Security for your Office 365 dev/test environment](cloud-app-security-for-your-office-365-dev-test-environment.md)
     
-    Configure and demonstrate Office 365 Cloud App Security, which allows you to create policies that monitor for and inform you of suspicious activities in your Office 365 subscription.
+    Configure and demonstrate Office 365 Cloud App Security, which lets you create policies that monitor for and inform you of suspicious activities in your Office 365 subscription.
     
 - [Advanced Threat Protection for your Office 365 dev/test environment](advanced-threat-protection-for-your-office-365-dev-test-environment.md)
     
@@ -69,7 +67,7 @@ For your Office 365 dev/test environment, use these articles to demonstrate ente
     
 - [Advanced eDiscovery for your Office 365 dev/test environment](advanced-ediscovery-for-your-office-365-dev-test-environment.md)
     
-    Add example data and demonstrate Advanced eDiscovery, which allows you to quickly find and analyze the data that is stored in Office 365, including email and documents.
+    Add example data and demonstrate Advanced eDiscovery, which lets you quickly find and analyze the data that is stored in Office 365, including email and documents.
     
 - [Sensitive file protection in the Office 365 dev/test environment](sensitive-file-protection-in-the-office-365-dev-test-environment.md)
     
@@ -83,21 +81,10 @@ For your Office 365 dev/test environment, use these articles to demonstrate ente
     
     Demonstrate how to create a SharePoint Online team site that is isolated from the rest of the organization for sensitive or highly confidential resources.
     
-## The Microsoft 365 Enterprise dev/test environment
+## The Microsoft 365 Enterprise test environment
 
-Create a dev/test environment for [Microsoft 365 Enterprise](https://docs.microsoft.com/microsoft-365-enterprise/) scenarios with these articles:
-  
-- [The Microsoft 365 Enterprise dev/test environment](the-microsoft-365-enterprise-dev-test-environment.md)
-    
-    Create the initial environment that includes Office 365 E5, EMS E5, and a computer running Windows 10 Enterprise.
-    
-- [MAM policies for your Microsoft 365 Enterprise dev/test environment](mam-policies-for-your-microsoft-365-enterprise-dev-test-environment.md)
-    
-    Create user groups and mobile application management (MAM) policies for ioS and Android devices.
-    
-- [Enroll iOS and Android devices in your Microsoft Enterprise 365 dev/test environment](enroll-ios-and-android-devices-in-your-microsoft-enterprise-365-dev-test-environ.md)
-    
-    Enroll iOS or Android devices and manage them remotely.
+Create a test environment for [Microsoft 365 Enterprise](https://docs.microsoft.com/microsoft-365-enterprise/) with [these articles](https://docs.microsoft.com/microsoft-365/enterprise/m365-enterprise-test-lab-guides).
+ 
     
 ## Office 365 and Dynamics 365 dev/test environment
 
@@ -143,17 +130,7 @@ Here are additional cloud-based dev/test environments that you can create in Azu
     
     Build basic and high-availability SharePoint Server 2013 farms in Azure infrastructure services.
     
-**Join the discussion**
-
-|**Contact us**|**Description**|
-|:-----|:-----|
-|**What cloud adoption content do you need?** <br/> |We are creating content for cloud adoption that spans multiple Microsoft cloud platforms and services. Let us know what you think about our cloud adoption content, or ask for specific content by sending email to [cloudadopt@microsoft.com](mailto:cloudadopt@microsoft.com?Subject=[Cloud%20Adoption%20Content%20Feedback]:%20).  <br/> |
-|**Join the cloud adoption discussion** <br/> |If you are passionate about cloud-based solutions, consider joining the Cloud Adoption Advisory Board (CAAB) to connect with a larger, vibrant community of Microsoft content developers, industry professionals, and customers from around the globe. To join, add yourself as a member of the [CAAB (Cloud Adoption Advisory Board) space](https://aka.ms/caab) of the Microsoft Tech Community and send us a quick email at [CAAB@microsoft.com](mailto:caab@microsoft.com?Subject=I%20just%20joined%20the%20Cloud%20Adoption%20Advisory%20Board!). Anyone can read community-related content on the [CAAB blog](https://blogs.technet.com/b/solutions_advisory_board/). However, CAAB members get invitations to private webinars that describe new cloud adoption resources and solutions.  <br/> |
-|**Get the art you see here** <br/> |If you want an editable copy of the art you see in this article, we'll be glad to send it to you. Email your request, including the URL and title of the art, to [cloudadopt@microsoft.com](mailto:cloudadopt@microsoft.com?subject=[Art%20Request]:%20).  <br/> |
-   
 ## See Also
-
-<a name="ADD_TLGs"> </a>
 
 [Cloud adoption and hybrid solutions](cloud-adoption-and-hybrid-solutions.md)
   

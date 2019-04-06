@@ -3,12 +3,13 @@ title: "Manage Office 365 tenants with Windows PowerShell for Delegated Access P
 ms.author: chrfox
 author: chrfox
 manager: laurawi
-ms.date: 12/15/2017
 ms.audience: Admin
 ms.topic: article
 ms.service: o365-administration
 localization_priority: Normal
-ms.collection: Ent_O365
+ms.collection: 
+- Ent_O365
+- M365-subscription-management
 ms.custom: 
 ms.assetid: f92d5116-5b66-4150-ad20-1452fc3dd712
 description: "Summary: Use Windows PowerShell for Office 365 to manage your customer tenancies."
@@ -20,7 +21,7 @@ description: "Summary: Use Windows PowerShell for Office 365 to manage your cust
   
 Windows PowerShell allows Syndication and Cloud Solution Provider (CSP) partners to easily administer and report on customer tenancy settings that are not available in the Office 365 admin center. Note that Administer on Behalf Of (AOBO) permissions are required for the partner administrator account to connect to its customer tenancies.
   
-Delegated Access Permission (DAP) partners are Syndication and Cloud Solution Providers (CSP) Partners. They are frequently network or telecom providers to other companies. They bundle Office 365 subscriptions into their service offerings to their customers. When they sell an Office 365 subscription, they are automatically granted Administer On Behalf Of (AOBO) permissions to thecustomer tenancies so they can administer and report on the customer tenancies.
+Delegated Access Permission (DAP) partners are Syndication and Cloud Solution Providers (CSP) Partners. They are frequently network or telecom providers to other companies. They bundle Office 365 subscriptions into their service offerings to their customers. When they sell an Office 365 subscription, they are automatically granted Administer On Behalf Of (AOBO) permissions to the customer tenancies so they can administer and report on the customer tenancies.
 ## What do you need to know before you begin?
 
 The procedures in this topic require you to connect to Windows PowerShell for Office 365. For instructions, see [Connect to Office 365 PowerShell](connect-to-office-365-powershell.md).
@@ -37,7 +38,7 @@ You also need your partner tenant administrator credentials.
 To list all customer tenant Ids that you have access to, run this command.
   
 ```
-Get-MsolPartnerContract -All | Select-Object -TenantId
+Get-MsolPartnerContract -All | Select-Object TenantId
 ```
 
 This will display a listing of all your customer tenants by **TenantId**.
@@ -47,7 +48,7 @@ This will display a listing of all your customer tenants by **TenantId**.
 To get the **TenantId** for a specific customer tenant by domain name, run this command. Replace _<domainname.onmicrosoft.com>_ with the actual domain name of the customer tenant that you want.
   
 ```
-Get-MsolPartnerContract -DomainName <domainname.onmicrosoft.com> | Select-Object -TenantId
+Get-MsolPartnerContract -DomainName <domainname.onmicrosoft.com> | Select-Object TenantId
 ```
 
 ### List all domains for a tenant

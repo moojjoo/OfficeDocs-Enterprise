@@ -8,6 +8,8 @@ ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
@@ -22,14 +24,14 @@ description: "Summary: Configure directory synchronization for your Office 365 d
 
  **Summary:** Configure directory synchronization for your Office 365 dev/test environment.
   
-Many organizations use Azure AD Connect and directory synchronization to synchronize the set of accounts in their on-premises Windows Server Active Directory (AD) forest to the set of accounts in Office 365. This article describes how you can add directory synchronization with password hash synchronization to the Office 365 dev/test environment, resulting in the following configuration.
+Many organizations use Azure AD Connect and directory synchronization to synchronize the set of accounts in their on-premises Active Directory Domain Services (AD DS) forest to the set of accounts in Office 365. This article describes how you can add directory synchronization with password hash synchronization to the Office 365 dev/test environment, resulting in the following configuration.
   
-![The Office 365 dev/test environment with directory synchronization](images/be5b37b0-f832-4878-b153-436c31546e21.png)
+![The Office 365 dev/test environment with directory synchronization](media/be5b37b0-f832-4878-b153-436c31546e21.png)
   
 This configuration consists of: 
   
 - An Office 365 E5 Trial Subscription, which expires 30 days from when you create it.
-- A simplified organization intranet connected to the Internet, consisting of three virtual machines on a subnet of an Azure virtual network (DC1, APP1, and CLIENT1). Azure AD Connect runs on APP1 to synchronize the Windows Server AD domain to Office 365.
+- A simplified organization intranet connected to the Internet, consisting of three virtual machines on a subnet of an Azure virtual network (DC1, APP1, and CLIENT1). Azure AD Connect runs on APP1 to synchronize the AD DS domain to Office 365.
     
 There are two phases to setting up this dev/test environment:
   
@@ -43,7 +45,7 @@ There are two phases to setting up this dev/test environment:
 
 Follow the instructions in phases 1, 2, and 3 of the [Office 365 dev/test environment](office-365-dev-test-environment.md) article. Here is the resulting configuration.
   
-![The Office 365 dev/test environment](images/48fb91aa-09b0-4020-a496-a8253920c45d.png)
+![The Office 365 dev/test environment](media/48fb91aa-09b0-4020-a496-a8253920c45d.png)
   
 This configuration consists of: 
   
@@ -52,7 +54,7 @@ This configuration consists of:
     
 ## Phase 2: Install Azure AD Connect on APP1
 
-Once installed and configured, Azure AD Connect synchronizes the set of accounts in the CORP Windows Server AD domain with the set of accounts in your Office 365 trial subscription. The following procedure steps you through installing Azure AD Connect on APP1 and verifying that it works.
+Once installed and configured, Azure AD Connect synchronizes the set of accounts in the CORP AD DS domain with the set of accounts in your Office 365 trial subscription. The following procedure steps you through installing Azure AD Connect on APP1 and checking that it works.
   
 ### Install and configure Azure AD Connect on APP1
 
@@ -85,13 +87,13 @@ Stop-Process -Name Explorer -Force
     
 11. On the **Configuration complete** page, click **Exit**.
     
-12. In Internet Explorer, go to the Office 365 portal ([https://portal.office.com](https://portal.office.com)) and sign in to your Office 365 trial subscription with your global administrator account.
+12. In Internet Explorer, go to the Microsoft 365 admin center ([https://admin.microsoft.com](https://admin.microsoft.com)) and sign in to your Office 365 trial subscription with your global administrator account.
     
 13. From the main portal page, click **Admin**.
     
 14. In the left navigation, click **Users > Active users**.
     
-    Note the account named **User1**. This account is from the CORP Windows Server AD domain and is proof that directory synchronization has worked.
+    Note the account named **User1**. This account is from the CORP AD DS domain and is proof that directory synchronization has worked.
     
 15. Click the **User1** account. For product licenses, click **Edit**.
     
@@ -99,16 +101,16 @@ Stop-Process -Name Explorer -Force
     
 This is the resulting configuration.
   
-![The Office 365 dev/test environment with directory synchronization](images/be5b37b0-f832-4878-b153-436c31546e21.png)
+![The Office 365 dev/test environment with directory synchronization](media/be5b37b0-f832-4878-b153-436c31546e21.png)
   
 This configuration consists of: 
   
 - An Office 365 E5 Trial Subscription.
-- A simplified organization intranet connected to the Internet, consisting of the DC1, APP1, and CLIENT1 virtual machines on a subnet of an Azure virtual network. Azure AD Connect runs on APP1 to synchronize the CORP Windows Server AD domain to Office 365 every 30 minutes.
+- A simplified organization intranet connected to the Internet, consisting of the DC1, APP1, and CLIENT1 virtual machines on a subnet of an Azure virtual network. Azure AD Connect runs on APP1 to synchronize the CORP AD DS domain to Office 365 every 30 minutes.
     
 ## Next Step
 
-When you are ready to deploy directory synchronization for your organization, see [Deploy Office 365 directory synchronization in Microsoft Azure](deploy-office-365-directory-synchronization-dirsync-in-microsoft-azure.md).
+When you are ready to deploy directory synchronization for your organization, see [Deploy Office 365 Directory Synchronization in Microsoft Azure](deploy-office-365-directory-synchronization-dirsync-in-microsoft-azure.md).
 
 ## See Also
 

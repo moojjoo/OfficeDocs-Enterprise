@@ -3,7 +3,7 @@ title: "Connect to all Office 365 services in a single Windows PowerShell window
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 04/23/2018
+ms.date: 02/28/2019
 ms.audience: ITPro
 ms.topic: article
 ms.service: o365-administration
@@ -23,14 +23,17 @@ description: "Summary: Connect Windows PowerShell to all Office 365 services in 
 
  **Summary:** Instead of managing different Office 365 services in separate PowerShell console windows, you can connect to all Office 365 services and manage them from single console window.
   
-When you use PowerShell to manage Office 365, it is possible to have up to five different Windows PowerShell sessions open at the same time corresponding to Office 365 admin center, SharePoint Online, Exchange Online, Skype for Business Online, and the Security &amp; Compliance Center. With five different connection methods in separate Windows PowerShell sessions, your desktop could look like this:
+When you use PowerShell to manage Office 365, it is possible to have up to five different Windows PowerShell sessions open at the same time corresponding to Microsoft 365 admin center, SharePoint Online, Exchange Online, Skype for Business Online, and the Security &amp; Compliance Center. With five different connection methods in separate Windows PowerShell sessions, your desktop could look like this:
   
-![Five Windows PowerShell consoles running at once](images/a1a852c2-89ea-4e8e-8d8b-dcdf596763d1.png)
+![Five Windows PowerShell consoles running at once](media/a1a852c2-89ea-4e8e-8d8b-dcdf596763d1.png)
   
 This is not optimal for managing Office 365 because you can't exchange data among those five windows for cross-service management. This topic describes how to use a single instance of Windows PowerShell from which you can manage Office 365, Skype for Business Online, Exchange Online, SharePoint Online, and the Security &amp; Compliance Center.
 
+>[!Note]
+>This article currently only contains the commands to connect to the Office 365 Worldwide (+GCC) cloud. Additional notes provide links to articles with information about connecting to the other Office 365 clouds.
+>
+
 ## Before you begin
-<a name="BeforeYouBegin"> </a>
 
 Before you can manage all of Office 365 from a single instance of Windows PowerShell, consider the following prerequisites:
   
@@ -42,6 +45,8 @@ Before you can manage all of Office 365 from a single instance of Windows PowerS
     
   - Windows 8.1 or Windows 8
     
+  - Windows Server 2019
+    
   - Windows Server 2016
     
   - Windows Server 2012 R2 or Windows Server 2012
@@ -50,13 +55,13 @@ Before you can manage all of Office 365 from a single instance of Windows PowerS
     
   - Windows Server 2008 R2 SP1*
     
-    * You need to install the Microsoft .NET Framework 4.5.*x* and then either the Windows Management Framework 3.0 or the Windows Management Framework 4.0. For more information, see [Installing the .NET Framework](https://go.microsoft.com/fwlink/p/?LinkId=257868) and [Windows Management Framework 3.0](https://go.microsoft.com/fwlink/p/?LinkId=272757) or [Windows Management Framework 4.0](https://go.microsoft.com/fwlink/p/?LinkId=391344).
+    \* You need to install the Microsoft .NET Framework 4.5.*x* and then either the Windows Management Framework 3.0 or the Windows Management Framework 4.0. For more information, see [Installing the .NET Framework](https://go.microsoft.com/fwlink/p/?LinkId=257868) and [Windows Management Framework 3.0](https://go.microsoft.com/fwlink/p/?LinkId=272757) or [Windows Management Framework 4.0](https://go.microsoft.com/fwlink/p/?LinkId=391344).
     
     You need to use a 64-bit version of Windows because of the requirements for the Skype for Business Online module and one of the Office 365 modules.
     
 - You need to install the modules that are required for Azure AD, SharePoint Online, and Skype for Business Online:
     
-   - [Azure Active Directory V2](connect-to-office-365-powershell.md#ConnectV2)
+   - [Azure Active Directory V2](connect-to-office-365-powershell.md##connect-with-the-azure-active-directory-powershell-for-graph-module)
    - [SharePoint Online Management Shell](https://go.microsoft.com/fwlink/p/?LinkId=255251)
    - [Skype for Business Online, Windows PowerShell Module](https://go.microsoft.com/fwlink/p/?LinkId=532439)
     
@@ -67,7 +72,6 @@ Before you can manage all of Office 365 from a single instance of Windows PowerS
   ```
 
 ## Connection steps when using a password
-<a name="ConnStepsPassword"> </a>
 
 Here are the steps to connect to all the services in a single PowerShell window.
   
@@ -79,13 +83,19 @@ Here are the steps to connect to all the services in a single PowerShell window.
   $credential = Get-Credential
   ```
 
-3. Run this command to connect to Azure Active Directory (AD).
+3. Run this command to connect to Azure Active Directory (AD) using the Azure Active Directory PowerShell for Graph module.
     
   ```
-   Connect-AzureAD -Credential $credential
+  Connect-AzureAD -Credential $credential
   ```
+  
+  Alternately, if you are using the Microsoft Azure Active Directory Module for Windows PowerShell module, run this command.
+      
+  ```
+  Connect-MsolService -Credential $credential
+ ```
 
-4. Run these commands to connect to SharePoint Online. Replace  _\<domainhost>_ with the actual value for your domain. For example, for `litwareinc.onmicrosoft.com`, the  _\<domainhost>_ value is `litwareinc`.
+4. Run these commands to connect to SharePoint Online. Replace  _\<domainhost>_ with the actual value for your domain. For example, for "litwareinc.onmicrosoft.com", the  _\<domainhost>_ value is "litwareinc".
     
   ```
   Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
@@ -104,8 +114,12 @@ Here are the steps to connect to all the services in a single PowerShell window.
     
   ```
   $exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri "https://outlook.office365.com/powershell-liveid/" -Credential $credential -Authentication "Basic" -AllowRedirection
-  Import-PSSession $exchangeSession
+  Import-PSSession $exchangeSession -DisableNameChecking
   ```
+
+>[!Note]
+>To connect to Exchange Online for Office 365 clouds other than Worldwide, see [Connect to Exchange Online PowerShell](https://docs.microsoft.com/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/connect-to-exchange-online-powershell).
+>
 
 7. Run these commands to connect to the Security &amp; Compliance Center.
     
@@ -114,22 +128,44 @@ Here are the steps to connect to all the services in a single PowerShell window.
   Import-PSSession $SccSession -Prefix cc
   ```
 
-Here are all the commands in a single block. Specify the name of your domain host, and then run them all at one time.
+>[!Note]
+>To connect to the Security &amp; Compliance Center for Office 365 clouds other than Worldwide, see [Connect to Office 365 Security & Compliance Center PowerShell](https://docs.microsoft.com/powershell/exchange/office-365-scc/connect-to-scc-powershell/connect-to-scc-powershell).
+>
+
+Here are all the commands in a single block when using the Azure Active Directory PowerShell for Graph module. Specify the name of your domain host, and then run them all at one time.
   
 ```
-$domainHost="<domain host name, such as litware for litwareinc.onmicrosoft.com>"
+$orgName="<for example, litwareinc for litwareinc.onmicrosoft.com>"
 $credential = Get-Credential
 Connect-AzureAD -Credential $credential
 Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
-Connect-SPOService -Url https://$domainHost-admin.sharepoint.com -credential $credential
+Connect-SPOService -Url https://$orgName-admin.sharepoint.com -credential $credential
 Import-Module SkypeOnlineConnector
 $sfboSession = New-CsOnlineSession -Credential $credential
 Import-PSSession $sfboSession
 $exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri "https://outlook.office365.com/powershell-liveid/" -Credential $credential -Authentication "Basic" -AllowRedirection
-Import-PSSession $exchangeSession
+Import-PSSession $exchangeSession -DisableNameChecking
 $SccSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.compliance.protection.outlook.com/powershell-liveid/ -Credential $credential -Authentication "Basic" -AllowRedirection
 Import-PSSession $SccSession -Prefix cc
 ```
+
+Alternately, here are all the commands in a single block when using the Microsoft Azure Active Directory Module for Windows PowerShell module. Specify the name of your domain host, and then run them all at one time.
+  
+```
+$orgName="<for example, litwareinc for litwareinc.onmicrosoft.com>"
+$credential = Get-Credential
+Connect-MsolService -Credential $credential
+Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
+Connect-SPOService -Url https://$orgName-admin.sharepoint.com -credential $credential
+Import-Module SkypeOnlineConnector
+$sfboSession = New-CsOnlineSession -Credential $credential
+Import-PSSession $sfboSession
+$exchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri "https://outlook.office365.com/powershell-liveid/" -Credential $credential -Authentication "Basic" -AllowRedirection
+Import-PSSession $exchangeSession -DisableNameChecking
+$SccSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.compliance.protection.outlook.com/powershell-liveid/ -Credential $credential -Authentication "Basic" -AllowRedirection
+Import-PSSession $SccSession -Prefix cc
+```
+
 When you are ready to close down the Windows PowerShell window, run this command to remove the active sessions to Skype for Business Online, Exchange Online, SharePoint Online, and the Security &amp; Compliance Center:
   
 ```
@@ -137,17 +173,30 @@ Remove-PSSession $sfboSession ; Remove-PSSession $exchangeSession ; Remove-PSSes
 ```
 
 ## Connection steps when using multi-factor authentication
-<a name="ConnStepsMFA"> </a>
 
-Here are all the commands in a single block to connect to Azure AD, SharePoint Online, and Skype for Buiness using multi-factor authentication in a single window. Specify the user principal name (UPN) name of a global administrator account and your domain host name, and then run them all at one time.
+Here are all the commands in a single block to connect to Azure AD, SharePoint Online, and Skype for Buiness using multi-factor authentication in a single window using the Azure Active Directory PowerShell for Graph module. Specify the user principal name (UPN) name of a user account and your domain host name, and then run them all at one time.
 
 ````
-$acctName="<UPN of a global administrator account>"
-$domainHost="<domain host name, such as litware for litwareinc.onmicrosoft.com>"
+$acctName="<UPN of the account, such as belindan@litwareinc.onmicrosoft.com>"
+$orgName="<for example, litwareinc for litwareinc.onmicrosoft.com>"
 #Azure Active Directory
 Connect-AzureAD
 #SharePoint Online
-Connect-SPOService -Url https://$domainHost-admin.sharepoint.com
+Connect-SPOService -Url https://$orgName-admin.sharepoint.com
+#Skype for Business Online
+$sfboSession = New-CsOnlineSession -UserName $acctName
+Import-PSSession $sfboSession
+````
+
+Alternately, here are all the commands when using the Microsoft Azure Active Directory Module for Windows PowerShell module.
+
+````
+$acctName="<UPN of the account, such as belindan@litwareinc.onmicrosoft.com>"
+$orgName="<for example, litwareinc for litwareinc.onmicrosoft.com>"
+#Azure Active Directory
+Connect-MsolService
+#SharePoint Online
+Connect-SPOService -Url https://$orgName-admin.sharepoint.com
 #Skype for Business Online
 $sfboSession = New-CsOnlineSession -UserName $acctName
 Import-PSSession $sfboSession
@@ -160,10 +209,6 @@ For Exchange Online and the Security &amp; Compliance Center, see the following 
  
 Note that in both cases, you must connect using separate sessions of the Exchange Online Remote PowerShell Module.
 
-
-## New to Office 365?
-
-[!INCLUDE [LinkedIn Learning Info](../common/office/linkedin-learning-info.md)]
 
 ## See also
 

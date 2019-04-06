@@ -3,11 +3,13 @@ title: "Simulated cross-premises virtual network in Azure"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 05/18/2018
+ms.date: 07/09/2018
 ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
@@ -23,7 +25,7 @@ description: "Summary: Create a simulated cross-premises virtual network in Micr
   
 This article steps you through creating a simulated hybrid cloud environment with Microsoft Azure using two Azure virtual networks. Here is the resulting configuration. 
   
-![Phase 3 of the simulated cross-premises virtual network dev/test environment, with the DC2 virtual machine in the XPrem VNet](images/df458c56-022b-4688-ab18-056c3fd776b4.png)
+![Phase 3 of the simulated cross-premises virtual network dev/test environment, with the DC2 virtual machine in the XPrem VNet](media/df458c56-022b-4688-ab18-056c3fd776b4.png)
   
 This simulates an Azure IaaS hybrid cloud production environment and consists of:
   
@@ -52,7 +54,7 @@ There are three major phases to setting up this dev/test environment:
 > [!NOTE]
 > This configuration requires a paid Azure subscription. 
   
-![Test Lab Guides in the Microsoft Cloud](images/24ad0d1b-3274-40fb-972a-b8188b7268d1.png)
+![Test Lab Guides in the Microsoft Cloud](media/24ad0d1b-3274-40fb-972a-b8188b7268d1.png)
   
 > [!TIP]
 > Click [here](http://aka.ms/catlgstack) for a visual map to all the articles in the One Microsoft Cloud Test Lab Guide stack.
@@ -63,7 +65,7 @@ Use the instructions in [Base Configuration dev/test environment](base-configura
   
 This is your current configuration. 
   
-![Phase 4 of the Base Configuration in Azure with the CLIENT1 virtual machine](images/25a010a6-c870-4690-b8f3-84421f8bc5c7.png)
+![Phase 4 of the Base Configuration in Azure with the CLIENT1 virtual machine](media/25a010a6-c870-4690-b8f3-84421f8bc5c7.png)
   
 ## Phase 2: Create the XPrem virtual network
 
@@ -74,55 +76,57 @@ First, start an Azure PowerShell prompt on your local computer.
 > [!NOTE]
 > The following command sets use the latest version of Azure PowerShell. See [Get started with Azure PowerShell cmdlets](https://docs.microsoft.com/en-us/powershell/azureps-cmdlets-docs/). 
   
-Sign in to your Azure account with the following command.
+Sign in to your Azure account with this command.
   
 ```
-Login-AzureRMAccount
+Connect-AzAccount
 ```
 
+<!--
 > [!TIP]
-> Click [here](https://gallery.technet.microsoft.com/PowerShell-commands-for-7844edd0) to get a text file that contains all of the PowerShell commands in this article.
+> Click [here](https://gallery.technet.microsoft.com/PowerShell-commands-for-7844edd0) to get a text file that has all of the PowerShell commands in this article.
+-->
   
-Get your subscription name using the following command.
+Get your subscription name using this command.
   
 ```
-Get-AzureRMSubscription | Sort Name | Select Name
+Get-AzSubscription | Sort Name | Select Name
 ```
 
 Set your Azure subscription. Replace everything within the quotes, including the \< and > characters, with the correct names.
   
 ```
 $subscrName="<subscription name>"
-Get-AzureRmSubscription -SubscriptionName $subscrName | Select-AzureRmSubscription
+Select-AzSubscription -SubscriptionName $subscrName
 ```
 
 Next, create the XPrem virtual network and protect it with a network security group with these commands.
   
 ```
 $rgName="<name of the resource group that you used for your TestLab virtual network>"
-$locName=(Get-AzureRmResourceGroup -Name $rgName).Location
-$Testnet=New-AzureRMVirtualNetworkSubnetConfig -Name "Testnet" -AddressPrefix 192.168.0.0/24
-New-AzureRMVirtualNetwork -Name "XPrem" -ResourceGroupName $rgName -Location $locName -AddressPrefix 192.168.0.0/16 -Subnet $Testnet -DNSServer 10.0.0.4
-$rule1=New-AzureRMNetworkSecurityRuleConfig -Name "RDPTraffic" -Description "Allow RDP to all VMs on the subnet" -Access Allow -Protocol Tcp -Direction Inbound -Priority 100 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 3389
-New-AzureRMNetworkSecurityGroup -Name "Testnet" -ResourceGroupName $rgName -Location $locName -SecurityRules $rule1
-$vnet=Get-AzureRMVirtualNetwork -ResourceGroupName $rgName -Name XPrem
-$nsg=Get-AzureRMNetworkSecurityGroup -Name "Testnet" -ResourceGroupName $rgName
-Set-AzureRMVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "Testnet" -AddressPrefix 192.168.0.0/24 -NetworkSecurityGroup $nsg
+$locName=(Get-AzResourceGroup -Name $rgName).Location
+$Testnet=New-AzVirtualNetworkSubnetConfig -Name "Testnet" -AddressPrefix 192.168.0.0/24
+New-AzVirtualNetwork -Name "XPrem" -ResourceGroupName $rgName -Location $locName -AddressPrefix 192.168.0.0/16 -Subnet $Testnet -DNSServer 10.0.0.4
+$rule1=New-AzNetworkSecurityRuleConfig -Name "RDPTraffic" -Description "Allow RDP to all VMs on the subnet" -Access Allow -Protocol Tcp -Direction Inbound -Priority 100 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 3389
+New-AzNetworkSecurityGroup -Name "Testnet" -ResourceGroupName $rgName -Location $locName -SecurityRules $rule1
+$vnet=Get-AzVirtualNetwork -ResourceGroupName $rgName -Name XPrem
+$nsg=Get-AzNetworkSecurityGroup -Name "Testnet" -ResourceGroupName $rgName
+Set-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "Testnet" -AddressPrefix 192.168.0.0/24 -NetworkSecurityGroup $nsg
 ```
 
 Next, you create the VNet peering relationship between the TestLab and XPrem VNets with these commands.
   
 ```
 $rgName="<name of the resource group that you used for your TestLab virtual network>"
-$vnet1=Get-AzureRmVirtualNetwork -ResourceGroupName $rgName -Name TestLab
-$vnet2=Get-AzureRmVirtualNetwork -ResourceGroupName $rgName -Name XPrem
-Add-AzureRmVirtualNetworkPeering -Name TestLab2XPrem -VirtualNetwork $vnet1 -RemoteVirtualNetworkId $vnet2.Id
-Add-AzureRmVirtualNetworkPeering -Name XPrem2TestLab -VirtualNetwork $vnet2 -RemoteVirtualNetworkId $vnet1.Id
+$vnet1=Get-AzVirtualNetwork -ResourceGroupName $rgName -Name TestLab
+$vnet2=Get-AzVirtualNetwork -ResourceGroupName $rgName -Name XPrem
+Add-AzVirtualNetworkPeering -Name TestLab2XPrem -VirtualNetwork $vnet1 -RemoteVirtualNetworkId $vnet2.Id
+Add-AzVirtualNetworkPeering -Name XPrem2TestLab -VirtualNetwork $vnet2 -RemoteVirtualNetworkId $vnet1.Id
 ```
 
 This is your current configuration. 
   
-![Phase 2 of the simulated cross-premises virtual network dev/test environment, with the XPrem VNet and the VNet peering relationship](images/cac5e999-69c7-4f4c-bfce-a7f4006115ef.png)
+![Phase 2 of the simulated cross-premises virtual network dev/test environment, with the XPrem VNet and the VNet peering relationship](media/cac5e999-69c7-4f4c-bfce-a7f4006115ef.png)
   
 ## Phase 3: Configure DC2
 
@@ -132,20 +136,20 @@ First, create a virtual machine for DC2. Run these commands at the Azure PowerSh
   
 ```
 $rgName="<your resource group name>"
-$locName=(Get-AzureRmResourceGroup -Name $rgName).Location
-$vnet=Get-AzureRMVirtualNetwork -Name XPrem -ResourceGroupName $rgName
-$pip=New-AzureRMPublicIpAddress -Name DC2-PIP -ResourceGroupName $rgName -Location $locName -AllocationMethod Dynamic
-$nic=New-AzureRMNetworkInterface -Name DC2-NIC -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id -PrivateIpAddress 192.168.0.4
-$vm=New-AzureRMVMConfig -VMName DC2 -VMSize Standard_A1
+$locName=(Get-AzResourceGroup -Name $rgName).Location
+$vnet=Get-AzVirtualNetwork -Name XPrem -ResourceGroupName $rgName
+$pip=New-AzPublicIpAddress -Name DC2-PIP -ResourceGroupName $rgName -Location $locName -AllocationMethod Dynamic
+$nic=New-AzNetworkInterface -Name DC2-NIC -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id -PrivateIpAddress 192.168.0.4
+$vm=New-AzVMConfig -VMName DC2 -VMSize Standard_A1
 $cred=Get-Credential -Message "Type the name and password of the local administrator account for DC2."
-$vm=Set-AzureRMVMOperatingSystem -VM $vm -Windows -ComputerName DC2 -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
-$vm=Set-AzureRMVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2016-Datacenter -Version "latest"
-$vm=Add-AzureRMVMNetworkInterface -VM $vm -Id $nic.Id
-$vm=Set-AzureRmVMOSDisk -VM $vm -Name "DC2-OS" -DiskSizeInGB 128 -CreateOption FromImage -StorageAccountType "StandardLRS"
-$diskConfig=New-AzureRmDiskConfig -AccountType "StandardLRS" -Location $locName -CreateOption Empty -DiskSizeGB 20
-$dataDisk1=New-AzureRmDisk -DiskName "DC2-DataDisk1" -Disk $diskConfig -ResourceGroupName $rgName
-$vm=Add-AzureRmVMDataDisk -VM $vm -Name "DC2-DataDisk1" -CreateOption Attach -ManagedDiskId $dataDisk1.Id -Lun 1
-New-AzureRMVM -ResourceGroupName $rgName -Location $locName -VM $vm
+$vm=Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName DC2 -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+$vm=Set-AzVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2016-Datacenter -Version "latest"
+$vm=Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
+$vm=Set-AzVMOSDisk -VM $vm -Name "DC2-OS" -DiskSizeInGB 128 -CreateOption FromImage -StorageAccountType "Standard_LRS"
+$diskConfig=New-AzDiskConfig -AccountType "Standard_LRS" -Location $locName -CreateOption Empty -DiskSizeGB 20
+$dataDisk1=New-AzDisk -DiskName "DC2-DataDisk1" -Disk $diskConfig -ResourceGroupName $rgName
+$vm=Add-AzVMDataDisk -VM $vm -Name "DC2-DataDisk1" -CreateOption Attach -ManagedDiskId $dataDisk1.Id -Lun 1
+New-AzVM -ResourceGroupName $rgName -Location $locName -VM $vm
 ```
 
 Next, connect to the new DC2 virtual machine from the [Azure portal](https://portal.azure.com) using its local administrator account name and password.
@@ -177,10 +181,10 @@ Note that you are prompted to supply both the CORP\\User1 password and a Directo
 Now that the XPrem virtual network has its own DNS server (DC2), you must configure the XPrem virtual network to use this DNS server. Run these commands from the Azure PowerShell command prompt on your local computer.
   
 ```
-$vnet=Get-AzureRmVirtualNetwork -ResourceGroupName $rgName -name "XPrem"
+$vnet=Get-AzVirtualNetwork -ResourceGroupName $rgName -name "XPrem"
 $vnet.DhcpOptions.DnsServers="192.168.0.4" 
-Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
-Restart-AzureRmVM -ResourceGroupName $rgName -Name "DC2"
+Set-AzVirtualNetwork -VirtualNetwork $vnet
+Restart-AzVM -ResourceGroupName $rgName -Name "DC2"
 ```
 
 From the Azure portal on your local computer, connect to DC1 with the CORP\\User1 credentials. To configure the CORP domain so that computers and users use their local domain controller for authentication, run these commands from an administrator-level Windows PowerShell command prompt on DC1.
@@ -194,7 +198,7 @@ New-ADReplicationSubnet -Name "192.168.0.0/16" -Site "XPrem"
 
 This is your current configuration. 
   
-![Phase 3 of the simulated cross-premises virtual network dev/test environment, with the DC2 virtual machine in the XPrem VNet](images/df458c56-022b-4688-ab18-056c3fd776b4.png)
+![Phase 3 of the simulated cross-premises virtual network dev/test environment, with the DC2 virtual machine in the XPrem VNet](media/df458c56-022b-4688-ab18-056c3fd776b4.png)
   
 Your simulated Azure hybrid cloud environment is now ready for testing.
   

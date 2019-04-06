@@ -8,6 +8,8 @@ ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
@@ -23,7 +25,7 @@ description: "Summary: Use this Test Lab Guide to create a dev/test environment 
   
 With the instructions in this article, you create a simulated intranet in Microsoft Azure infrastructure services and then add Microsoft Office 365, Microsoft Enterprise Mobility + Security (EMS), and Microsoft Dynamics 365 subscriptions. The result is a simplified organization that uses all Microsoft's cloud offerings at the same time in a single dev/test environment. 
   
-![Phase 3 of the One Microsoft Cloud dev/test environment with Azure, Office 365, EMS, and Dynamics 365](images/31714fcc-0c7d-411f-bcd1-c62d9be090ee.png)
+![Phase 3 of the One Microsoft Cloud dev/test environment with Azure, Office 365, EMS, and Dynamics 365](media/31714fcc-0c7d-411f-bcd1-c62d9be090ee.png)
   
 You can use the resulting configuration to:
   
@@ -39,11 +41,11 @@ You can use the resulting configuration to:
 
 Follow the instructions in [DirSync for your Office 365 dev/test environment](dirsync-for-your-office-365-dev-test-environment.md).
   
-Figure 1 shows your resulting configuration, which includes Office 365 and a simulated intranet running in Azure infrastructure services and directory synchronization from an on-premises Windows Server Active Directory (AD) forest.
+Figure 1 shows your resulting configuration, which includes Office 365 and a simulated intranet running in Azure infrastructure services and directory synchronization from an on-premises Active Directory Domain Services (AD DS) forest.
   
 **Figure 1: The simulated intranet in Azure with Office 365**
 
-![The Office 365 dev/test environment with DirSync](images/be5b37b0-f832-4878-b153-436c31546e21.png)
+![The Office 365 dev/test environment with DirSync](media/be5b37b0-f832-4878-b153-436c31546e21.png)
   
 > [!NOTE]
 > The Azure trial is 30 days. The Office 365 Enterprise E5 Trial subscription is 30 days, which can be easily extended for another 30 days. For a permanent dev/test environment, create a new paid Azure subscription and a new paid Office 365 Enterprise E5 subscription with a small number of licenses. 
@@ -52,7 +54,7 @@ Figure 1 shows your resulting configuration, which includes Office 365 and a sim
 
 In this phase, you sign up for the EMS trial subscription and add it to the same organization as your Office 365 trial subscription.
   
-1. With a browser on either your desktop computer or from CLIENT1, sign in to the Office 365 portal at [https://portal.office.com](https://portal.office.com) with the credentials of your global administrator account.
+1. With a browser on either your desktop computer or from CLIENT1, sign in to the Office 365 portal at [https://www.office.com](https://www.office.com) with the credentials of your global administrator account.
     
 2. Click the **Admin** tile.
     
@@ -89,17 +91,17 @@ Figure 2 shows your resulting configuration, which adds EMS.
   
 **Figure 2: The simulated intranet in Azure with Office 365 and EMS**
 
-![Phase 2 of the One Microsoft Cloud dev/test environment with Azure, Office 365, and EMS](images/fdb520fe-ebbd-4681-a80e-b60df52f07c5.png)
+![Phase 2 of the One Microsoft Cloud dev/test environment with Azure, Office 365, and EMS](media/fdb520fe-ebbd-4681-a80e-b60df52f07c5.png)
   
 ## Phase 3: Add Dynamics 365
 
 In this phase, you sign up for the Dynamics 365 trial subscription and add it to the same organization as your Office 365 and EMS trial subscriptions.
   
-1. Using a browser on either your desktop computer or from CLIENT1, sign in to the Office 365 portal at [https://portal.office.com](https://portal.office.com) with the credentials of your global administrator account.
+1. Using a browser on either your desktop computer or from CLIENT1, sign in to the Office 365 portal at [https://www.office.com](https://www.office.com) with the credentials of your global administrator account.
     
 2. Click the **Admin** tile.
     
-3. On the **Office admin center** tab, in the left navigation, click **Billing > Purchase services**.
+3. On the **Microsoft 365 admin center** tab, in the left navigation, click **Billing > Purchase services**.
     
 4. On the **Purchase services** page, find the **Dynamics 365 Plan 1 Enterprise Edition** item. Hover your mouse pointer over it and click **Start free trial**.
     
@@ -112,7 +114,7 @@ In this phase, you sign up for the Dynamics 365 trial subscription and add it to
   
 Use these steps to assign Dynamics 365 licenses to the global administrator, User 2, and User 3 accounts and make them system administrators.
   
-1. On the **Office admin center** tab, click **Users > Active users**.
+1. On the **Microsoft 365 admin center** tab, click **Users > Active users**.
     
 2. In the list of active users, click your global administrator account, and then click **Edit** for **Product licenses**.
     
@@ -120,7 +122,7 @@ Use these steps to assign Dynamics 365 licenses to the global administrator, Use
     
 4. Perform steps 2 and 3 for the User 2 and User 3 accounts.
     
-5. Close the **Office admin center** tab.
+5. Close the **Microsoft 365 admin center** tab.
     
 Use these steps to configure the User 2 and User 3 accounts as Dynamics 365 system administrators.
   
@@ -132,7 +134,7 @@ Use these steps to configure the User 2 and User 3 accounts as Dynamics 365 syst
     
     Wait for setup to complete.
     
-    When setup completes, it displays a Sales Activity Dashboard based on sample data that is part of the trail subscription. Take a few moments to view the **Welcome to your trial** video. Close the video window when complete.
+    When setup completes, it shows a Sales Activity Dashboard based on sample data that is part of the trail subscription. Take a few moments to view the **Welcome to your trial** video. Close the video window when complete.
     
 3. On the toolbar at the top, click the down arrow next to **Sales**, click **Settings**, and then click **Security**.
     
@@ -167,7 +169,7 @@ Figure 3 shows your resulting configuration.
   
 **Figure 3: The simulated intranet in Azure with Office 365, EMS, and Dynamics 365**
 
-![Phase 3 of the One Microsoft Cloud dev/test environment with Azure, Office 365, EMS, and Dynamics 365](images/31714fcc-0c7d-411f-bcd1-c62d9be090ee.png)
+![Phase 3 of the One Microsoft Cloud dev/test environment with Azure, Office 365, EMS, and Dynamics 365](media/31714fcc-0c7d-411f-bcd1-c62d9be090ee.png)
   
 ## Next steps
 

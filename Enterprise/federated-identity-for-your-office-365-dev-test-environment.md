@@ -3,11 +3,13 @@ title: "Federated identity for your Office 365 dev/test environment"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 04/06/2018
+ms.date: 07/09/2018
 ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
@@ -28,7 +30,7 @@ This article describes how you can configure federated authentication for the Of
   
 **Figure 1: The federated authentication for Office 365 dev/test environment**
 
-![The web application proxy server added to the DirSync for Office 365 dev/test environment](images/f50039e4-796a-42c0-bfdc-87c2026b1579.png)
+![The federated authentication for Office 365 dev/test environment](media/f50039e4-796a-42c0-bfdc-87c2026b1579.png)
   
 The configuration shown in Figure 1 consists of: 
   
@@ -68,7 +70,7 @@ Here is your resulting configuration.
   
 **Figure 2: Directory synchronization for the Office 365 dev/test environment**
 
-![The Office 365 dev/test environment with directory synchronization](images/be5b37b0-f832-4878-b153-436c31546e21.png)
+![The Office 365 dev/test environment with directory synchronization](media/be5b37b0-f832-4878-b153-436c31546e21.png)
   
 Figure 2 shows the directory synchronizationc for Office 365 dev/test environment, which includes Office 365 and CLIENT1, APP1, and DC1 virtual machines in an Azure virtual network.
   
@@ -79,30 +81,31 @@ An AD FS server provides federated authentication between Office 365 and the acc
 To create an Azure virtual machine for ADFS1, fill in the name of your subscription and the resource group and Azure location for your Base Configuration, and then run these commands at the Azure PowerShell command prompt on your local computer.
   
 ```
-$subscr="<your Azure subscription name>"
+$subscrName="<your Azure subscription name>"
 $rgName="<the resource group name of your Base Configuration>"
-Login-AzureRMAccount
-Get-AzureRmSubscription -SubscriptionName $subscr | Select-AzureRmSubscription
+Connect-AzAccount
+Select-AzSubscription -SubscriptionName $subscrName
 $staticIP="10.0.0.100"
-$locName=(Get-AzureRmResourceGroup -Name $rgName).Location
-$vnet=Get-AzureRMVirtualNetwork -Name TestLab -ResourceGroupName $rgName
-$pip = New-AzureRMPublicIpAddress -Name ADFS1-PIP -ResourceGroupName $rgName -Location $locName -AllocationMethod Dynamic
-$nic = New-AzureRMNetworkInterface -Name ADFS1-NIC -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id -PrivateIpAddress $staticIP
-$vm=New-AzureRMVMConfig -VMName ADFS1 -VMSize Standard_D2_v2
+$locName=(Get-AzResourceGroup -Name $rgName).Location
+$vnet=Get-AzVirtualNetwork -Name TestLab -ResourceGroupName $rgName
+$pip = New-AzPublicIpAddress -Name ADFS1-PIP -ResourceGroupName $rgName -Location $locName -AllocationMethod Dynamic
+$nic = New-AzNetworkInterface -Name ADFS1-NIC -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id -PrivateIpAddress $staticIP
+$vm=New-AzVMConfig -VMName ADFS1 -VMSize Standard_D2_v2
 $cred=Get-Credential -Message "Type the name and password of the local administrator account for ADFS1."
-$vm=Set-AzureRMVMOperatingSystem -VM $vm -Windows -ComputerName ADFS1 -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
-$vm=Set-AzureRMVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2016-Datacenter -Version "latest"
-$vm=Add-AzureRMVMNetworkInterface -VM $vm -Id $nic.Id
-$vm=Set-AzureRmVMOSDisk -VM $vm -Name "ADFS-OS" -DiskSizeInGB 128 -CreateOption FromImage -StorageAccountType "StandardLRS"
-New-AzureRMVM -ResourceGroupName $rgName -Location $locName -VM $vm
+$vm=Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName ADFS1 -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+$vm=Set-AzVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2016-Datacenter -Version "latest"
+$vm=Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
+$vm=Set-AzVMOSDisk -VM $vm -Name "ADFS-OS" -DiskSizeInGB 128 -CreateOption FromImage -StorageAccountType "Standard_LRS"
+New-AzVM -ResourceGroupName $rgName -Location $locName -VM $vm
 ```
-
+<!--
 > [!TIP]
-> Click [here](https://gallery.technet.microsoft.com/PowerShell-commands-for-f79bc2c2?redir=0) for a text file that contains all the PowerShell commands in this article.
+> Click [here](https://gallery.technet.microsoft.com/PowerShell-commands-for-f79bc2c2?redir=0) for a text file that has all the PowerShell commands in this article.
+-->
   
 Next, use the [Azure portal](http://portal.azure.com) to connect to the ADFS1 virtual machine using the ADFS1 local administrator account name and password, and then open a Windows PowerShell command prompt.
   
-To check name resolution and network communication between ADFS1 and DC1, run the **ping dc1.corp.contoso.com** command and verify that there are four replies.
+To check name resolution and network communication between ADFS1 and DC1, run the **ping dc1.corp.contoso.com** command and check that there are four replies.
   
 Next, join the ADFS1 virtual machine to the CORP domain with these commands at the Windows PowerShell prompt on ADFS1.
   
@@ -116,30 +119,30 @@ Here is your resulting configuration.
   
 **Figure 3: Adding the AD FS server**
 
-![The AD FS server added to the DirSync for Office 365 dev/test environment](images/da82f39e-426d-41e2-842a-c13b382d63d5.png)
+![The AD FS server added to the DirSync for Office 365 dev/test environment](media/da82f39e-426d-41e2-842a-c13b382d63d5.png)
   
 Figure 3 shows the addition of the ADFS1 server to the DirSync for Office 365 dev/test environment.
   
 ## Phase 3: Create the web proxy server
 
-PROXY1 provides proxying of authentication messages between users attempting to authenticate and ADFS1.
+PROXY1 provides proxying of authentication messages between users trying to authenticate and ADFS1.
   
 To create an Azure virtual machine for PROXY1, fill in the name of your resource group and Azure location, and then run these commands at the Azure PowerShell command prompt on your local computer.
   
 ```
 $rgName="<the resource group name of your Base Configuration>"
 $staticIP="10.0.0.101"
-$locName=(Get-AzureRmResourceGroup -Name $rgName).Location
-$vnet=Get-AzureRMVirtualNetwork -Name TestLab -ResourceGroupName $rgName
-$pip = New-AzureRMPublicIpAddress -Name PROXY1-PIP -ResourceGroupName $rgName -Location $locName -AllocationMethod Static
-$nic = New-AzureRMNetworkInterface -Name PROXY1-NIC -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id -PrivateIpAddress $staticIP
-$vm=New-AzureRMVMConfig -VMName PROXY1 -VMSize Standard_D2_v2
+$locName=(Get-AzResourceGroup -Name $rgName).Location
+$vnet=Get-AzVirtualNetwork -Name TestLab -ResourceGroupName $rgName
+$pip = New-AzPublicIpAddress -Name PROXY1-PIP -ResourceGroupName $rgName -Location $locName -AllocationMethod Static
+$nic = New-AzNetworkInterface -Name PROXY1-NIC -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id -PrivateIpAddress $staticIP
+$vm=New-AzVMConfig -VMName PROXY1 -VMSize Standard_D2_v2
 $cred=Get-Credential -Message "Type the name and password of the local administrator account for PROXY1."
-$vm=Set-AzureRMVMOperatingSystem -VM $vm -Windows -ComputerName PROXY1 -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
-$vm=Set-AzureRMVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2016-Datacenter -Version "latest"
-$vm=Add-AzureRMVMNetworkInterface -VM $vm -Id $nic.Id
-$vm=Set-AzureRmVMOSDisk -VM $vm -Name "PROXY1-OS" -DiskSizeInGB 128 -CreateOption FromImage -StorageAccountType "StandardLRS"
-New-AzureRMVM -ResourceGroupName $rgName -Location $locName -VM $vm
+$vm=Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName PROXY1 -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+$vm=Set-AzVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2016-Datacenter -Version "latest"
+$vm=Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
+$vm=Set-AzVMOSDisk -VM $vm -Name "PROXY1-OS" -DiskSizeInGB 128 -CreateOption FromImage -StorageAccountType "Standard_LRS"
+New-AzVM -ResourceGroupName $rgName -Location $locName -VM $vm
 ```
 
 > [!NOTE]
@@ -149,12 +152,12 @@ Next, add a rule to the network security group for the CorpNet subnet to allow u
   
 ```
 $rgName="<the resource group name of your Base Configuration>"
-Get-AzureRmNetworkSecurityGroup -Name CorpNet -ResourceGroupName $rgName | Add-AzureRmNetworkSecurityRuleConfig -Name "HTTPS-to-PROXY1" -Description "Allow TCP 443 to PROXY1" -Access "Allow" -Protocol "Tcp" -Direction "Inbound" -Priority 101 -SourceAddressPrefix "Internet" -SourcePortRange "*" -DestinationAddressPrefix "10.0.0.101" -DestinationPortRange "443" | Set-AzureRmNetworkSecurityGroup
+Get-AzNetworkSecurityGroup -Name CorpNet -ResourceGroupName $rgName | Add-AzNetworkSecurityRuleConfig -Name "HTTPS-to-PROXY1" -Description "Allow TCP 443 to PROXY1" -Access "Allow" -Protocol "Tcp" -Direction "Inbound" -Priority 101 -SourceAddressPrefix "Internet" -SourcePortRange "*" -DestinationAddressPrefix "10.0.0.101" -DestinationPortRange "443" | Set-AzNetworkSecurityGroup
 ```
 
 Next, use the [Azure portal](http://portal.azure.com) to connect to the PROXY1 virtual machine using the PROXY1 local administrator account name and password, and then open a Windows PowerShell command prompt on PROXY1.
   
-To check name resolution and network communication between PROXY1 and DC1, run the **ping dc1.corp.contoso.com** command and verify that there are four replies.
+To check name resolution and network communication between PROXY1 and DC1, run the **ping dc1.corp.contoso.com** command and check that there are four replies.
   
 Next, join the PROXY1 virtual machine to the CORP domain with these commands at the Windows PowerShell prompt on PROXY1.
   
@@ -167,7 +170,7 @@ Restart-Computer
 Display the public IP address of PROXY1 with these Azure PowerShell commands on your local computer:
   
 ```
-Write-Host (Get-AzureRMPublicIpaddress -Name "PROXY1-PIP" -ResourceGroup $rgName).IPAddress
+Write-Host (Get-AzPublicIpaddress -Name "PROXY1-PIP" -ResourceGroup $rgName).IPAddress
 ```
 
 Next, work with your public DNS provider and create a new public DNS A record for **fs.testlab.**\<your DNS domain name> that resolves to the IP address displayed by the **Write-Host** command. The **fs.testlab.**\<your DNS domain name> is hereafter referred to as the  *federation service FQDN*  .
@@ -187,7 +190,7 @@ Here is your resulting configuration.
   
 **Figure 4: Adding the web application proxy server**
 
-![The web application proxy server added to the DirSync for Office 365 dev/test environment](images/f50039e4-796a-42c0-bfdc-87c2026b1579.png)
+![The web application proxy server added to the DirSync for Office 365 dev/test environment](media/f50039e4-796a-42c0-bfdc-87c2026b1579.png)
   
 Figure 4 shows the addition of the PROXY1 server.
   
@@ -394,9 +397,9 @@ Use these steps to configure Azure AD Connect and your Office 365 subscription f
     
 13. On the **Installation complete** page, click **Exit**.
     
-To demonstrate that federated authentication is working, do the following:
+To demonstrate that federated authentication is working:
   
-1. Open a new private instance of your browser on your local computer and go to [https://portal.office.com](https://portal.office.com).
+1. Open a new private instance of your browser on your local computer and go to [https://admin.microsoft.com](https://admin.microsoft.com).
     
 2. For the sign-in credentials, type **user1@**\<the domain created in Phase 1>. 
     

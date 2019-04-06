@@ -3,11 +3,13 @@ title: "Common elements of Microsoft cloud connectivity"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 12/15/2017
+ms.date: 11/28/2018
 ms.audience: ITPro
 ms.topic: conceptual
 ms.service: o365-solutions
 localization_priority: Normal
+search.appverid:
+- MET150
 ms.collection: Ent_O365
 ms.custom: Ent_Architecture
 ms.assetid: 061d4507-7360-4029-8f4b-3d4bc6b4ade0
@@ -44,7 +46,7 @@ Use your existing Internet pipe or an ExpressRoute connection to Office 365, Azu
   
 **Figure 1: Options for Microsoft cloud connectivity**
 
-![Figure 1:  Options for Microsoft cloud connectivity](images/Network_Poster/CommonElements.png)
+![Figure 1:  Options for Microsoft cloud connectivity](media/Network-Poster/CommonElements.png)
 
   
 Figure 1 shows how an on-premises network can be connected to Microsoft cloud offerings using their existing Internet pipe or ExpressRoute. The Internet pipe represents a DMZ and can have the following components:
@@ -53,9 +55,9 @@ Figure 1 shows how an on-premises network can be connected to Microsoft cloud of
     
 - **External workload:** Web sites or other workloads made available to external users on the Internet.
     
-- **Proxy server:** Services requests for web content on behalf of intranet users. A reverse proxy allows unsolicited inbound requests.
+- **Proxy server:** Services requests for web content on behalf of intranet users. A reverse proxy permits unsolicited inbound requests.
     
-- **External firewall:** Allows outbound traffic and specified inbound traffic. Can perform address translation.
+- **External firewall:** Allows outbound traffic and specified inbound traffic. Can perform address translation, packet inspection, SSL Break and Inspect, or data loss prevention.
     
 - **WAN connection to ISP:** A carrier-based connection to an ISP, who peers with the Internet for connectivity and routing.
     

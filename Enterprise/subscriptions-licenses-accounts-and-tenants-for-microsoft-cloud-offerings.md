@@ -3,11 +3,13 @@ title: "Subscriptions, licenses, accounts, and tenants for Microsoft's cloud off
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 12/15/2017
+ms.date: 07/12/2018
 ms.audience: ITPro
 ms.topic: conceptual
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
@@ -45,7 +47,7 @@ Here are the elements of the hierarchy:
   
 ### Organization
 
-An organization represents a business entity that is using Microsoft cloud offerings, typically identified by a public Domain Name System (DNS) domain name such as contoso.com. The organization is a container for subscriptions.
+An organization represents a business entity that is using Microsoft cloud offerings, typically identified by one or more public Domain Name System (DNS) domain names, such as contoso.com. The organization is a container for subscriptions.
   
 ### Subscriptions
 
@@ -57,7 +59,7 @@ Organizations can have multiple subscriptions for Microsoft's cloud offerings. F
   
 **Figure 1: Example of multiple subscriptions for an organization**
 
-![An example organization with multiple subscriptions for Microsoft's cloud offerings.](images/Subscriptions/Subscriptions_Fig1.png)
+![An example organization with multiple subscriptions for Microsoft's cloud offerings.](media/Subscriptions/Subscriptions-Fig1.png)
 
   
 Figure 1 shows a single organization that has multiple Office 365 subscriptions, an Intune subscription, a Dynamics 365 subscription, and multiple Azure subscriptions.
@@ -68,7 +70,7 @@ For Microsoft's SaaS cloud offerings, a license allows a specific user account t
   
 **Figure 2: Licenses within the SaaS-based subscriptions for an organization**
 
-![An example of multiple licenses within subscriptions for Microsoft's SaaS-based cloud offerings.](images/Subscriptions/Subscriptions_Fig2.png)
+![An example of multiple licenses within subscriptions for Microsoft's SaaS-based cloud offerings.](media/Subscriptions/Subscriptions-Fig2.png)
   
 For Azure PaaS-based cloud services, software licenses are built into the service pricing.
   
@@ -84,7 +86,7 @@ Figure 3 shows an example of multiple subscriptions of an organization using a c
   
 **Figure 3: Multiple subscriptions of an organization that use the same Azure AD tenant**
 
-![An example organization with multiple subscriptions all using the same Azure AD tenant.](images/Subscriptions/Subscriptions_Fig3.png)
+![An example organization with multiple subscriptions all using the same Azure AD tenant.](media/Subscriptions/Subscriptions-Fig3.png)
   
 ### Tenants
 
@@ -126,9 +128,9 @@ Multiple Microsoft cloud offering subscriptions can use the same Azure AD tenant
   
 **Figure 4: Synchronized on-premises accounts and IDaaS for an organization**
 
-![Identity as a Service (IaaS) IDaaS for your organization.](images/Subscriptions/Subscriptions_Fig4.png)
+![Identity as a Service (IaaS) IDaaS for your organization.](media/Subscriptions/Subscriptions-Fig4.png)
   
-Figure 4 shows how a common Azure AD tenant is utilized by Microsoft's SaaS cloud offerings, Azure PaaS apps, and virtual machines in Azure IaaS that use Azure AD Domain Services. Azure AD Connect synchronizes the on-premises Windows Server AD forest with the Azure AD tenant.
+Figure 4 shows how a common Azure AD tenant is used by Microsoft's SaaS cloud offerings, Azure PaaS apps, and virtual machines in Azure IaaS that use Azure AD Domain Services. Azure AD Connect synchronizes the on-premises Windows Server AD forest with the Azure AD tenant.
   
 For more information about identity integration across Microsoft's cloud offerings, see [Microsoft Cloud Identity for Enterprise Architects](https://aka.ms/cloudarchidentity).
   
@@ -138,14 +140,14 @@ The following table describes how you can combine multiple Microsoft cloud offer
   
 ||**Office 365**|**Azure**|**Intune/EMS**|**Dynamics 365**|
 |:-----|:-----|:-----|:-----|:-----|
-|**Office 365** <br/> |NA  <br/> |You add an Azure subscription to your organization from the Azure portal.  <br/> |You add an Intune/EMS subscription to your organization from the Office 365 portal.  <br/> |You add a Dynamics 365 subscription to your organization from the Office 365 portal.  <br/> |
+|**Office 365** <br/> |NA  <br/> |You add an Azure subscription to your organization from the Azure portal.  <br/> |You add an Intune/EMS subscription to your organization from the Microsoft 365 admin center.  <br/> |You add a Dynamics 365 subscription to your organization from the Microsoft 365 admin center.  <br/> |
 |**Azure** <br/> |You add an Office 365 subscription to your organization.  <br/> |NA  <br/> |You add an Intune/EMS subscription to your organization.  <br/> |You add a Dynamics 365 subscription to your organization.  <br/> |
 |**Intune/EMS** <br/> |You add an Office 365 subscription to your organization.  <br/> |You add an Azure subscription to your organization from the Azure portal.  <br/> |NA  <br/> |You add a Dynamics 365 subscription to your organization.  <br/> |
 |**Dynamics 365** <br/> |You add an Office 365 subscription to your organization.  <br/> |You add an Azure subscription to your organization from the Azure portal.  <br/> |You add an Intune/EMS subscription to your organization.  <br/> |NA  <br/> |
    
 An easy way to add subscriptions to your organization for Microsoft SaaS-based services is through the Office 365 Admin center:
   
-1. Sign in to the Office 365 portal ([https://portal.office.com](https://portal.office.com)) with your global administrator account, and then click **Admin**.
+1. Sign in to the Microsoft 365 admin center ([https://admin.microsoft.com](https://admin.microsoft.com)) with your global administrator account.
     
 2. From the left navigation of the **Admin center** home page, click **Billing**, and then **Purchase services**.
     
@@ -173,7 +175,3 @@ If you purchased Azure and Office 365 subscriptions separately and want to acces
   
 [Hybrid solutions](hybrid-solutions.md)
   
-[Subscriptions, licenses, and user accounts for the Contoso Corporation](subscriptions-licenses-and-user-accounts-for-the-contoso-corporation.md)
-
-
-

@@ -3,11 +3,13 @@ title: "Office 365 dev/test environment"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 04/11/2018
+ms.date: 04/02/2019
 ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Priority
+search.appverid:
+- MET150
 ms.collection: 
 - Ent_O365
 - Strat_O365_Enterprise
@@ -34,7 +36,7 @@ You can use an Office 365 trial subscription and create an Office 365 dev/test e
 > [!NOTE]
 > You might want to print this article to record the specific values that you will need for this environment over the 30 days of the Office 365 trial subscription. You can easily extend the trail subscription for another 30 days. For a permanent dev/test environment, create a new paid subscription with a small number of licenses. 
   
-![Test Lab Guides in the Microsoft Cloud](images/24ad0d1b-3274-40fb-972a-b8188b7268d1.png)
+![Test Lab Guides in the Microsoft Cloud](media/24ad0d1b-3274-40fb-972a-b8188b7268d1.png)
   
 > [!TIP]
 > Click [here](http://aka.ms/catlgstack) for a visual map to all the articles in the One Microsoft Cloud Test Lab Guide stack.
@@ -47,7 +49,7 @@ You will need an Azure subscription. You can use the [Azure Free Trial](https://
   
 Here is the resulting configuration.
   
-![The Base Configuration dev/test environment in Azure](images/25a010a6-c870-4690-b8f3-84421f8bc5c7.png)
+![The Base Configuration dev/test environment in Azure](media/25a010a6-c870-4690-b8f3-84421f8bc5c7.png)
 
 
   
@@ -57,13 +59,13 @@ This configuration consists of the DC1, APP1, and CLIENT1 virtual machines on a 
 
 To start your Office 365 E5 trial subscription, you first need a fictitious company name and a new Microsoft account.
   
-1. We recommend that you use a variant of the company name Contoso for your company name, which is a fictitious company used in Microsoft sample content, but it isn't required. Record your fictitious company name here: ![](./images/Common_Images/TableLine.png)
+1. We recommend that you use a variant of the company name Contoso for your company name, which is a fictitious company used in Microsoft sample content, but it isn't required. Record your fictitious company name here: ![](./media/Common-Images/TableLine.png)
     
 2. To sign up for a new Microsoft account, go to [https://outlook.com](https://outlook.com) and create an account with a new email account and address. You will use this account to sign up for Office 365.
     
-  - Record the first and last name of your new account here: ![](./images/Common_Images/TableLine.png)
+  - Record the first and last name of your new account here: ![](./media/Common-Images/TableLine.png)
     
-  - Record the new email account address here: ![](./images/Common_Images/TableLine.png)@outlook.com
+  - Record the new email account address here: ![](./media/Common-Images/TableLine.png)@outlook.com
     
 ### Sign up for an Office 365 E5 trial subscription
 
@@ -93,7 +95,7 @@ To start your Office 365 E5 trial subscription, you first need a fictitious comp
     
     Record the password that you typed in a secure location.
     
-    Record your fictional company name, to be referred to as the **organization name**, here: ![](./images/Common_Images/TableLine.png)
+    Record your fictional company name, to be referred to as the **organization name**, here: ![](./media/Common-Images/TableLine.png)
     
 5. Click **Create my account**.
     
@@ -101,9 +103,9 @@ To start your Office 365 E5 trial subscription, you first need a fictitious comp
     
 7. Type the verification code from the received text message, and then click **Next**.
     
-8. Record the sign-in page URL here (select and copy): ![](./images/Common_Images/TableLine.png)
+8. Record the sign-in page URL here (select and copy): ![](./media/Common-Images/TableLine.png)
     
-9. Record the user ID here (select and copy): ![](./images/Common_Images/TableLine.png).onmicrosoft.com
+9. Record the user ID here (select and copy): ![](./media/Common-Images/TableLine.png).onmicrosoft.com
     
     This value will be referred to as the **Office 365 global administrator name**.
     
@@ -111,11 +113,11 @@ To start your Office 365 E5 trial subscription, you first need a fictitious comp
     
 11. On the next page, wait until Office 365 completes setting up and all the tiles are available.
     
-You should see main Office 365 portal page from which you can access Office Online services and the Office 365 Admin center.
+You should see main Office 365 portal page from which you can access Office Online services and the Microsoft 365 Admin center.
   
 For the simulated enterprise Office 365 dev/test environment, here is your resulting configuration.
   
-![The Office 365 dev/test environment](images/48fb91aa-09b0-4020-a496-a8253920c45d.png)
+![The Office 365 dev/test environment](media/48fb91aa-09b0-4020-a496-a8253920c45d.png)
   
 This configuration consists of: 
   
@@ -125,11 +127,9 @@ This configuration consists of:
     
 ## Phase 3: Configure your Office 365 trial subscription
 
-In this phase, you configure your Office 365 subscription with additional users and SharePoint Online team sites.
+In this phase, you configure your Office 365 subscription with additional users and assign them Office 365 E5 licenses.
   
-First, you add four new users and assign them E5 licenses.
-  
-Use the instructions in [Connect to Office 365 PowerShell](https://technet.microsoft.com/library/dn975125.aspx) to install the PowerShell modules and connect to your new Office 365 subscription from:
+Use the instructions in [Connect to Office 365 PowerShell](https://docs.microsoft.com/office365/enterprise/powershell/connect-to-office-365-powershell#connect-with-the-azure-active-directory-powershell-for-graph-module) to connect to your Office 365 subscription with the Azure Active Directory PowerShell for Graph module from:
   
 - Your computer (for the lightweight Office 365 dev/test environment).
     
@@ -137,51 +137,50 @@ Use the instructions in [Connect to Office 365 PowerShell](https://technet.micro
     
  In the Windows PowerShell Credential Request dialog box, type the Office 365 global administrator name (example: jdoe@contosotoycompany.onmicrosoft.com) and password.
   
-Fill in your organization name (example: contosotoycompany), the two-character country code for your location, and then run the following commands from the Windows Azure Active Directory Module for Windows PowerShell prompt:
-  
+Fill in your organization name (example: contosotoycompany), the two-character country code for your location, a common account password, and then run the following commands from the PowerShell prompt:
+
 ```
 $orgName="<organization name>"
 $loc="<two-character country code, such as US>"
-$licAssignment= $orgName + ":ENTERPRISEPREMIUM"
-$userName= "user2@" + $orgName + ".onmicrosoft.com"
-New-MsolUser -DisplayName "User 2" -FirstName User -LastName 2 -UserPrincipalName $userName -UsageLocation $loc -LicenseAssignment $licAssignment
+$commonPW="<common user account password>"
+$PasswordProfile=New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
+$PasswordProfile.Password=$commonPW
+
+$userUPN= "user2@" + $orgName + ".onmicrosoft.com"
+New-AzureADUser -DisplayName "User 2" -GivenName User -SurName 2 -UserPrincipalName $userUPN -UsageLocation $loc -AccountEnabled $true -PasswordProfile $PasswordProfile -MailNickName "user2"
+$License = New-Object -TypeName Microsoft.Open.AzureAD.Model.AssignedLicense
+$License.SkuId = (Get-AzureADSubscribedSku | Where-Object -Property SkuPartNumber -Value "ENTERPRISEPREMIUM" -EQ).SkuID
+$LicensesToAssign = New-Object -TypeName Microsoft.Open.AzureAD.Model.AssignedLicenses
+$LicensesToAssign.AddLicenses = $License
+Set-AzureADUserLicense -ObjectId $userUPN -AssignedLicenses $LicensesToAssign
+
+$userUPN= "user3@" + $orgName + ".onmicrosoft.com"
+New-AzureADUser -DisplayName "User 3" -GivenName User -SurName 3 -UserPrincipalName $userUPN -UsageLocation $loc -AccountEnabled $true -PasswordProfile $PasswordProfile -MailNickName "user3"
+$License = New-Object -TypeName Microsoft.Open.AzureAD.Model.AssignedLicense
+$License.SkuId = (Get-AzureADSubscribedSku | Where-Object -Property SkuPartNumber -Value "ENTERPRISEPREMIUM" -EQ).SkuID
+$LicensesToAssign = New-Object -TypeName Microsoft.Open.AzureAD.Model.AssignedLicenses
+$LicensesToAssign.AddLicenses = $License
+Set-AzureADUserLicense -ObjectId $userUPN -AssignedLicenses $LicensesToAssign
+
+$userUPN= "user4@" + $orgName + ".onmicrosoft.com"
+New-AzureADUser -DisplayName "User 4" -GivenName User -SurName 4 -UserPrincipalName $userUPN -UsageLocation $loc -AccountEnabled $true -PasswordProfile $PasswordProfile -MailNickName "user4"
+$License = New-Object -TypeName Microsoft.Open.AzureAD.Model.AssignedLicense
+$License.SkuId = (Get-AzureADSubscribedSku | Where-Object -Property SkuPartNumber -Value "ENTERPRISEPREMIUM" -EQ).SkuID
+$LicensesToAssign = New-Object -TypeName Microsoft.Open.AzureAD.Model.AssignedLicenses
+$LicensesToAssign.AddLicenses = $License
+Set-AzureADUserLicense -ObjectId $userUPN -AssignedLicenses $LicensesToAssign
 ```
+
+<!--
 > [!TIP]
-> Click [here](https://gallery.technet.microsoft.com/PowerShell-commands-for-fe3d7a34) to get a text file that contains all the PowerShell commands in this article.
+> Click [here](https://gallery.technet.microsoft.com/PowerShell-commands-for-fe3d7a34) to get a text file that has all the PowerShell commands in this article.
+-->
 
-From the display of the **New-MsolUser** command, note the generated password for the User 2 account and record it in a safe location.
   
-Run the following commands from the Windows Azure Active Directory Module for Windows PowerShell prompt:
-  
-```
-$userName= "user3@" + $orgName + ".onmicrosoft.com"
-New-MsolUser -DisplayName "User 3" -FirstName User -LastName 3 -UserPrincipalName $userName -UsageLocation $loc -LicenseAssignment $licAssignment
-```
+## Phase 4: Create three new SharePoint Online team sites (optional)
 
-From the display of the **New-MsolUser** command, note the generated password for the User 3 account and record it in a safe location.
+In this phase, you configure a set of SharePoint Online team sites.
   
-Run the following commands from the Windows Azure Active Directory Module for Windows PowerShell prompt:
-  
-```
-$userName= "user4@" + $orgName + ".onmicrosoft.com"
-New-MsolUser -DisplayName "User 4" -FirstName User -LastName 4 -UserPrincipalName $userName -UsageLocation $loc -LicenseAssignment $licAssignment
-```
-
-From the display of the **New-MsolUser** command, note the generated password for the User 4 account and record it in a safe location.
-  
-Run the following commands from the Windows Azure Active Directory Module for Windows PowerShell prompt:
-  
-```
-$userName= "user5@" + $orgName + ".onmicrosoft.com"
-New-MsolUser -DisplayName "User 5" -FirstName User -LastName 5 -UserPrincipalName $userName -UsageLocation $loc -LicenseAssignment $licAssignment
-```
-
-From the display of the **New-MsolUser** command, note the generated password for the User 5 account and record it in a safe location.
-  
-Next, you create three new SharePoint Online team sites for the Sales, Production, and Support departments.
-  
-### Create three new SharePoint Online team sites
-
 1. Install the [SharePoint Online Management Shell](https://go.microsoft.com/fwlink/p/?LinkId=255251) (the x64 version).
     
 2. Click **Start**, type **sharepoint**, and then click **SharePoint Online Management Shell**.
@@ -219,41 +218,41 @@ New-SPOSite -Url $siteURL -Owner $owner -StorageQuota 1000 -Title "Support site 
 
 Record these values for working with or deploying additional Test Lab Guides in this test environment:
   
-- Office 365 global administrator name: ![](./images/Common_Images/TableLine.png).onmicrosoft.com (from step 9 of Phase 2)
+- Office 365 global administrator name: ![](./media/Common-Images/TableLine.png).onmicrosoft.com (from step 9 of Phase 2)
     
     Also record the password for this account in a secure location.
     
-- Your trial subscription organization name: ![](./images/Common_Images/TableLine.png) (from step 4 of Phase 2)
+- Your trial subscription organization name: ![](./media/Common-Images/TableLine.png) (from step 4 of Phase 2)
     
 - To list the accounts for User 2, User 3, User 4, and User 5, run the following command from the Windows Azure Active Directory Module for Windows PowerShell prompt:
     
   ```
-  Get-MSolUser | Sort UserPrincipalName | Select UserPrincipalName
+  Get-AzureADUser | Sort UserPrincipalName | Select UserPrincipalName
   ```
 
     Record the account names here:
     
-  - User 2 account name: user2@![](./images/Common_Images/TableLine.png).onmicrosoft.com
+  - User 2 account name: user2@![](./media/Common-Images/TableLine.png).onmicrosoft.com
     
-  - User 3 account name: user3@![](./images/Common_Images/TableLine.png).onmicrosoft.com
+  - User 3 account name: user3@![](./media/Common-Images/TableLine.png).onmicrosoft.com
     
-  - User 4 account name: user4@![](./images/Common_Images/TableLine.png).onmicrosoft.com
+  - User 4 account name: user4@![](./media/Common-Images/TableLine.png).onmicrosoft.com
     
-  - User 5 account name: user5@![](./images/Common_Images/TableLine.png).onmicrosoft.com
+  - User 5 account name: user5@![](./media/Common-Images/TableLine.png).onmicrosoft.com
     
     Also record the passwords for these accounts in a secure location.
     
-- To list the URLs for the Sales, Production, and Support team sites, run the following command from the SharePoint Online Management Shell prompt:
+- (optional) To list the URLs for the Sales, Production, and Support team sites, run the following command from the SharePoint Online Management Shell prompt:
     
   ```
   Get-SPOSite | Where URL -like "*/sites/*" | Sort URL | Select URL
   ```
 
-  - Production site URL: https://![](./images/Common_Images/TableLine.png).sharepoint.com/sites/production
+  - Production site URL: https://![](./media/Common-Images/TableLine.png).sharepoint.com/sites/production
     
-  - Sales site URL: https://![](./images/Common_Images/TableLine.png).sharepoint.com/sites/sales
+  - Sales site URL: https://![](./media/Common-Images/TableLine.png).sharepoint.com/sites/sales
     
-  - Support site URL: https://![](./images/Common_Images/TableLine.png).sharepoint.com/sites/support
+  - Support site URL: https://![](./media/Common-Images/TableLine.png).sharepoint.com/sites/support
     
 ## Next steps
 

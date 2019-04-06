@@ -8,6 +8,8 @@ ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Normal
+search.appverid:
+- MET150
 ms.collection: Ent_O365
 ms.custom: Ent_TLGs
 ms.assetid: 499c5823-427a-4ba2-8fc1-9553bc2ff2d3
@@ -29,19 +31,19 @@ Use this Test Lab Guide to configure and demonstrate how Exchange Online and the
 Use the instructions in [Office 365 and Dynamics 365 dev/test environment](office-365-and-dynamics-365-dev-test-environment.md) to create either a lightweight or simulated enterprise version of an Office 365 and Dynamics 365 dev/test environment.
   
 > [!NOTE]
-> The configuration in this article does not require the simulated enterprise dev/test environment, which includes a simulated intranet connected to the Internet and directory synchronization for a Windows Server Active Directory (AD) forest. It is provided here as an option so that you can experiment with Office 365 and Dynamics 365 in an environment that represents a typical organization 
+> The configuration in this article does not require the simulated enterprise dev/test environment, which includes a simulated intranet connected to the Internet and directory synchronization for an Active Directory Domain Services (AD DS) forest. It is provided here as an option so that you can experiment with Office 365 and Dynamics 365 in an environment that represents a typical organization 
   
 ## Phase 2: Configure and demonstrate Dynamics 365 integration in Exchange Online
 
 Use these steps to configure the global administrator's mailbox for Dynamics 365 and Exchange Online integration:
   
-1. Using a private session of your browser, go to [http://portal.office.com](http://portal.office.com) and sign in using your Office 365 global administrator account.
+1. Using a private session of your browser, go to [http://admin.microsoft.com](http://admin.microsoft.com) and sign in using your Office 365 global administrator account.
     
 2. On the **Microsoft Office Home** page, click the **Mail** tile.
     
-3. On the new **Mail** tab in your browser, click **New** and notice how the bottom corner of the pane below the box for typing a message contains an icon for My Templates.
+3. On the new **Mail** tab in your browser, click **New** and notice how the bottom corner of the pane below the box for typing a message has an icon for My Templates.
     
-     ![A blank new email message without integration with Dynamics 365.](images/879b54fd-a68f-4581-9f89-d5050df6f4de.png)
+     ![A blank new email message without integration with Dynamics 365.](media/879b54fd-a68f-4581-9f89-d5050df6f4de.png)
   
 4. Click **Discard** and leave the **Mail** tab open.
     
@@ -81,15 +83,15 @@ Use these steps to install the Dynamics 365 App for Outlook and demonstrate Dyna
     
 5. Click the **Microsoft Office Home** tab in your browser, and then click the **Mail** tile.
     
-6. On the new **Mail** tab in your browser, click **New**. Notice that the bottom corner of the pane below the box for typing a message now contains an icon for Dynamics 365.
+6. On the new **Mail** tab in your browser, click **New**. Notice that the bottom corner of the pane below the box for typing a message now has an icon for Dynamics 365.
     
-     ![A blank new email message with integration with Dynamics 365, showing the new icon.](images/ecb822e1-45fe-4481-99a1-294317d1d2de.png)
+     ![A blank new email message with integration with Dynamics 365, showing the new icon.](media/ecb822e1-45fe-4481-99a1-294317d1d2de.png)
   
 7. Click the Dynamics 365 icon. You should see a **Dynamics 365** pane, from which you can track this email or access templates, sales literature, or articles.
     
 8. In the **To** field of the email message, type **alex.y.wu@outlook.com**, and then click **Retry** in the **Dynamics 365** pane. You should see a **Recipients** section in the **Dynamics 365** pane with information on Alex Wu, a contact from the sales application that was provided with the sample data for your trial subscription.
     
-     ![The Dynamics 365 information pane for a sales contact stored in Dynamics 365.](images/a010fa5f-3f1b-47d4-ab5e-d00d85a24a3f.png)
+     ![The Dynamics 365 information pane for a sales contact stored in Dynamics 365.](media/a010fa5f-3f1b-47d4-ab5e-d00d85a24a3f.png)
   
 9. Click **Discard**.
 

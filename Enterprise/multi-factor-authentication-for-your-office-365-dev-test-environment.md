@@ -3,11 +3,13 @@ title: "Multi-factor authentication for your Office 365 dev/test environment"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 05/22/2018
+ms.date: 02/20/2019
 ms.audience: ITPro
 ms.topic: article
 ms.service: o365-solutions
 localization_priority: Normal
+search.appverid:
+- MET150
 ms.collection: Ent_O365
 ms.custom: 
 - TLG
@@ -20,7 +22,7 @@ description: "Summary: Configure multi-factor authentication using text messages
 
  **Summary:** Configure multi-factor authentication using text messages sent to a smart phone in an Office 365 dev/test environment.
   
-For an additional level of security for signing in to your Office 365 subscription, you can enable Azure multi-factor authentication, which requires more than just a username and password to verify an account. With multi-factor authentication for Office 365, users are required to acknowledge a phone call, type a verification code sent in a text message, or specify an app password on their smart phones after correctly entering their passwords. They can sign in only after this second authentication factor has been satisfied. 
+For an additional level of security for signing in to your Office 365 subscription, you can enable Azure multi-factor authentication, which requires more than just a username and password to authenticate an account. With multi-factor authentication for Office 365, users are required to acknowledge a phone call, type a verification code sent in a text message, or specify an app password on their smart phones after correctly entering their passwords. They can sign in only after this second authentication factor has been satisfied. 
   
 This article describes how to enable and test text message-based authentication for a specific Office 365 account.
   
@@ -46,13 +48,13 @@ If you want to test multi-factor authentication in a simulated enterprise, follo
 
 Enable multi-factor authentication for the User 2 account with these steps:
   
-1. Open a separate instance of your browser, go to the Office 365 portal ([https://portal.office.com](https://portal.office.com)), and then sign in to your Office 365 trial subscription with your global administrator account.
+1. Open a separate instance of your browser, go to the Office 365 portal ([https://www.office.com](https://www.office.com)), and then sign in to your Office 365 trial subscription with your global administrator account.
     
 2. From the main portal page, click **Admin**.
     
 3. In the left navigation, click **Users > Active users**.
     
-4. In the Active users pane, click **More > Setup Azure multi-factor auth**.
+4. In the Active users pane, click **More > Multi-factor authentication setup**.
     
 5. In the list, select the **User 2** account.
     
@@ -60,7 +62,7 @@ Enable multi-factor authentication for the User 2 account with these steps:
     
 7. In the **About enabling multi-factor auth** dialog box, click **Enable multi-factor auth**.
     
-8. In the **Update successful** dialog box, click **Close**.
+8. In the **Updates successful** dialog box, click **Close**.
     
 9. On the **Microsoft Office Home** tab, click the user account icon in the upper right, and then click **Sign out**.
     
@@ -70,7 +72,7 @@ Complete the configuration for the User 2 account to use a text message for vali
   
 1. Open a new instance of your browser.
     
-2. Go to the Office 365 portal ([https://portal.office.com](https://portal.office.com)) and sign in with the User 2 account (user2@\<organization name>.onmicrosoft.com) and password.
+2. Go to the Office 365 portal ([https://www.office.com](https://www.office.com)) and sign in with the User 2 account (user2@\<organization name>.onmicrosoft.com) and password.
     
 3. After signing in, you are prompted to set up the account for additional security validation. Click **Set it up now**.
     

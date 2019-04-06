@@ -3,11 +3,13 @@ title: "Hybrid cloud overview"
 ms.author: josephd
 author: JoeDavies-MSFT
 manager: laurawi
-ms.date: 12/15/2017
+ms.date: 11/30/2018
 ms.audience: ITPro
 ms.topic: overview
 ms.service: o365-solutions
 localization_priority: Normal
+search.appverid:
+- MET150
 ms.collection: Ent_O365
 ms.custom: Ent_Architecture
 ms.assetid: 3ea3ee10-411e-4690-b9e5-f1b46f1f4d59
@@ -32,7 +34,7 @@ Microsoft hybrid cloud is a set of business scenarios that combine a Microsoft c
     
 **Figure 1: Components of the Microsoft hybrid cloud**
 
-![Components of the Microsoft hybrid cloud](images/Hybrid_Poster/MS_Hybrid_Cloud.png)
+![Components of the Microsoft hybrid cloud](media/Hybrid-Poster/MS-Hybrid-Cloud.png)
   
 Figure 1 shows the components of the Microsoft hybrid cloud, from an on-premises network to the set of Office 365, Azure Platform as a Service (PaaS), and Azure Infrastructure as a Service (IaaS) services available across the Internet or an ExpressRoute connection.
   
@@ -48,7 +50,7 @@ Scenarios for hybrid cloud with Microsoft cloud services vary with the platform.
   
 - SaaS
     
-    Microsoft SaaS services include Office 365, Microsoft Intune, and Microsoft Dynamics 365. Hybrid cloud scenarios with Microsoft SaaS combine these services with on-premises services or applications. For example, Exchange Online running in Office 365 can be integrated with Skype for Business 2015 that is deployed on-premises.
+    Microsoft SaaS services include Office 365, Microsoft Intune, and Microsoft Dynamics 365. Hybrid cloud scenarios with Microsoft SaaS combine these services with on-premises services or applications. For example, Exchange Online running in Office 365 can be integrated with Skype for Business 2019 that is deployed on-premises.
     
 - Azure PaaS
     
@@ -72,7 +74,7 @@ You must account for the following elements when planning and implementing hybri
     
 - Security
     
-    Security for hybrid cloud scenarios includes protection and management for your identities, data protection, administrative privilege management, threat awareness, and the implementation of governance and security policies. For more information, see [Microsoft Cloud Security for Enterprise Architects](https://technet.microsoft.com/library/dn919927.aspx#security).
+    Security for hybrid cloud scenarios includes protection and management for your identities, data protection, administrative privilege management, threat awareness, and the implementation of governance and security policies. For more information, see [Microsoft Cloud Security for Enterprise Architects](microsoft-cloud-it-architecture-resources.md#security).
     
 - Management
     
@@ -83,8 +85,4 @@ You must account for the following elements when planning and implementing hybri
 [Microsoft Hybrid Cloud for Enterprise Architects](microsoft-hybrid-cloud-for-enterprise-architects.md)
   
 [Microsoft Cloud IT architecture resources](microsoft-cloud-it-architecture-resources.md)
-
-[Microsoft's Enterprise Cloud Roadmap: Resources for IT Decision Makers](https://sway.com/FJ2xsyWtkJc2taRD)
- 
-
 
